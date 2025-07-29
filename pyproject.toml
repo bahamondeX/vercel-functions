@@ -1,0 +1,12 @@
+[project]
+name = "vercel-functions"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10.15"
+dependencies = [
+    "boto3>=1.39.15",
+    "boto3-stubs[all]>=1.39.15",
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+]

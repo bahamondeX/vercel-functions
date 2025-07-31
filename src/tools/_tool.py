@@ -47,7 +47,4 @@ class Tool(BaseModel, LazyProxy[R], ABC):
         )
 
     @abstractmethod
-    def run(self) -> tp.Annotated[
-        tp.Union[AudioContent, ImageContent, TextContent, JSONContent],
-        Field(discriminator="type"),
-    ]: ...
+    def run(self) -> tp.Union[AudioContent, ImageContent, TextContent, JSONContent]: ...

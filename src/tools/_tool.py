@@ -10,19 +10,19 @@ R = tp.TypeVar("R")
 
 class AudioContent(BaseModel):
     type: tp.Literal["audio"]
-    content: tp.Iterable[bytes] | bytes
+    content: bytes
 
 class ImageContent(BaseModel):
     type: tp.Literal["image"]
-    content: tp.Iterable[bytes] | bytes
+    content: bytes
 
 class TextContent(BaseModel):
     type: tp.Literal["text"]
-    content: tp.Iterable[str] | str
+    content: str
 
 class JSONContent(BaseModel):
     type: tp.Literal["json"]
-    content: tp.Iterable[dict[str, tp.Any]] | dict[str, tp.Any]
+    content: list[dict[str, tp.Any]] | dict[str, tp.Any]
 
 
 class Tool(BaseModel, LazyProxy[R], ABC):

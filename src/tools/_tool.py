@@ -8,17 +8,21 @@ from pydantic import BaseModel, Field
 
 R = tp.TypeVar("R")
 
+
 class AudioContent(BaseModel):
     type: tp.Literal["audio"]
     content: bytes
+
 
 class ImageContent(BaseModel):
     type: tp.Literal["image"]
     content: bytes
 
+
 class TextContent(BaseModel):
     type: tp.Literal["text"]
     content: str
+
 
 class JSONContent(BaseModel):
     type: tp.Literal["json"]

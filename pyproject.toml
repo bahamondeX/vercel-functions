@@ -5,9 +5,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10.15"
 dependencies = [
+    "base64perf>=0.0.11",
     "boto3>=1.39.15",
     "boto3-stubs[all]>=1.39.15",
     "fastapi>=0.116.1",
     "groq>=0.30.0",
+    "markdown-normalization>=0.0.1",
+    "python-dotenv>=1.1.1",
+    "rustid>=0.0.1",
     "uvicorn>=0.35.0",
 ]

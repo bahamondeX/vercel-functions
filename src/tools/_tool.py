@@ -9,47 +9,45 @@ from pydantic import BaseModel, Field
 R = tp.TypeVar("R")
 
 class AudioContent(BaseModel):
-	type: tp.Literal["audio"]
-	content: tp.Iterator[bytes] | bytes
+    type: tp.Literal["audio"]
+    content: tp.Iterable[bytes] | bytes
 
 class ImageContent(BaseModel):
-	type: tp.Literal["image"]
-	content: tp.Iterator[bytes] | bytes
+    type: tp.Literal["image"]
+    content: tp.Iterable[bytes] | bytes
 
 class TextContent(BaseModel):
-	type: tp.Literal["text"]
-	content:tp.Iterator[str] | str
+    type: tp.Literal["text"]
+    content: tp.Iterable[str] | str
 
 class JSONContent(BaseModel):
-	type: tp.Literal["json"]
-	content:tp.Iterator[dict[str, tp.Any]] | dict[str, tp.Any]
-
-Content = tp.Annotated[
-	tp.Union[AudioContent, ImageContent, TextContent, JSONContent],
-	Field(discriminator="type"),
-]
+    type: tp.Literal["json"]
+    content: tp.Iterable[dict[str, tp.Any]] | dict[str, tp.Any]
 
 
 class Tool(BaseModel, LazyProxy[R], ABC):
-	"""
-	Base class for all tools.
-	"""
+    """
+    Base class for all tools.
+    """
 
-	def __load__(self) -> R: ...
+    def __load__(self) -> R: ...
 
-	def __hash__(self) -> int:
-		return hash(self.model_dump_json())
+    def __hash__(self) -> int:
+        return hash(self.model_dump_json())
 
-	@classmethod
-	def tool_definition(cls) -> ChatCompletionToolParam:
-		return ChatCompletionToolParam(
-			type="function",
-			function=FunctionDefinition(
-				name=cls.__name__,
-				description=cls.__doc__ or "",
-				parameters=cls.model_json_schema().get("properties", {}),
-			),
-		)
+    @classmethod
+    def tool_definition(cls) -> ChatCompletionToolParam:
+        return ChatCompletionToolParam(
+            type="function",
+            function=FunctionDefinition(
+                name=cls.__name__,
+                description=cls.__doc__ or "",
+                parameters=cls.model_json_schema().get("properties", {}),
+            ),
+        )
 
-	@abstractmethod
-	def run(self) -> Content: ...
+    @abstractmethod
+    def run(self) -> tp.Annotated[
+        tp.Union[AudioContent, ImageContent, TextContent, JSONContent],
+        Field(discriminator="type"),
+    ]: ...

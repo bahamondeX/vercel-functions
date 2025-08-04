@@ -29,6 +29,11 @@ class JSONContent(BaseModel):
     content: list[dict[str, tp.Any]] | dict[str, tp.Any]
 
 
+Content: tpe.TypeAlias = tp.Annotated[
+    tp.Union[AudioContent, ImageContent, TextContent, JSONContent],
+    Field(discriminator="type"),
+]
+
 class Tool(BaseModel, LazyProxy[R], ABC):
     """
     Base class for all tools.
@@ -51,4 +56,4 @@ class Tool(BaseModel, LazyProxy[R], ABC):
         )
 
     @abstractmethod
-    def run(self) -> tp.Union[AudioContent, ImageContent, TextContent, JSONContent]: ...
+    def run(self) -> Content: ...

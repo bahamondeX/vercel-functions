@@ -16,5 +16,3 @@ def send_email(email: Email):
 @app.post("/search")
 def search(query: str):
     return SearchTool(query=query).run()
-
-print(EmailTool.model_json_schema())

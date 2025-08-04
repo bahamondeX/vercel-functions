@@ -6,10 +6,10 @@ from dataclasses import dataclass, field
 
 @dataclass
 class Email(Mail):
-	subject: str
-	html_content: str
-	from_email: str = field(default="oscar.bahamonde@pucp.pe")
-	to_emails: str = field(default="oscar.bahamonde@pucp.pe")
+    subject: str = field(default="")
+    html_content: str = field(default="")
+    from_email: str = field(default="oscar.bahamonde@pucp.pe")
+    to_emails: str = field(default="oscar.bahamonde@pucp.pe")
 
 
 class EmailTool(Tool[SendGridAPIClient]):

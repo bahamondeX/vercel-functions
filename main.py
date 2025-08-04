@@ -2,15 +2,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 from fastapi import FastAPI
-from src.tools.email_tool import EmailTool, Email
+from src.tools.email_tool import EmailTool, EmailResponse
 from src.tools.search_tool import SearchTool
 
 app = FastAPI()
 
 
-@app.post("/email")
-def send_email(email: Email):
-    return EmailTool(message=email).run()
+@app.post("/email", response_model=EmailResponse)
+def send_email(email: EmailTool):
+    return email.run()
 
 
 @app.post("/search")
